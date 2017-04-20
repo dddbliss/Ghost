@@ -1,0 +1,1 @@
+{{ display_pets_table() }}

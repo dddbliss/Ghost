@@ -1,0 +1,1 @@
+{{ display_pages_table() }}

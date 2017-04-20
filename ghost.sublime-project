@@ -1,0 +1,12 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"phpcompanion":
+	{
+		"namespace_prefix": "Ghost"
+	}
+}

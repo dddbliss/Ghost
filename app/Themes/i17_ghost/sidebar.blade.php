@@ -1,0 +1,1 @@
+{{ display_admin_menu() }}

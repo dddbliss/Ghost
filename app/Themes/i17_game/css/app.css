@@ -1,0 +1,44 @@
+/*------------------------------------*\
+  #BASE
+\*------------------------------------*/
+body {
+	background-color:#EEE;
+}
+
+
+
+/*------------------------------------*\
+  #CONTAINER
+\*------------------------------------*/
+.container {
+	max-width:1400px;
+	margin:0 auto;
+	background-color:#FAFAFA;
+}
+
+
+
+/*------------------------------------*\
+  #NAVIGATION
+\*------------------------------------*/
+.nav {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+	background-color:#333;
+	text-align:center;
+}
+	
+	.nav__item {
+		display:inline-block;
+	}
+
+		a.nav__link {
+			display:block;
+			color:#FAFAFA;
+			text-transform:uppercase;
+			padding:10px;
+			font-size:12px;
+			font-weight:700;
+			letter-spacing:1px;
+		}

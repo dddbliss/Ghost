@@ -1,0 +1,15 @@
+/*------------------------------------*\
+  #BASE
+\*------------------------------------*/
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900);
+
+.mce-tinymce {
+	margin-bottom:10px !important;
+}
+
+	.mce-tinymce body {
+		font-family:'Roboto', sans-serif;
+		font-size:14px;
+		color:#222222;
+		margin:10px;
+	}
