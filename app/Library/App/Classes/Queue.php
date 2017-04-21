@@ -7,6 +7,7 @@
 namespace Ghost\Library\App\Classes;
 
 use Illuminate\Support\Facades\Route;
+use igaster\laravelTheme\Facades\Theme;
 
 class Queue {
 
@@ -117,6 +118,7 @@ class Queue {
 	 */
 	public function load_scripts($page) {
 		// Check if the page variable contains a full url
+		
 		if(!str_contains($page, 'http')) {
 			if(!starts_with($page, '/')) {
 				$page_url = url('/').'/'.$page;
@@ -128,11 +130,7 @@ class Queue {
 		// Load all global application scripts
 		if($this->_has_scripts('global-app')) {
 			foreach($this->scripts['global-app'] as $script) {
-				if(starts_with($script['script'], 'http')) {
-					echo '<script src="'.$script['script'].'"></script>';
-				} else {
-					echo '<script src="/'.$script['script'].'"></script>';
-				}
+				echo Theme::js($script['script']);
 			}
 		}
 
@@ -140,11 +138,7 @@ class Queue {
 		if(starts_with($page_url, url('/').'/admin')) {
 			if($this->_has_scripts('global-admin')) {
 				foreach($this->scripts['global-admin'] as $script) {
-					if(starts_with($script['script'], 'http')) {
-						echo '<script src="'.$script['script'].'"></script>';
-					} else {
-						echo '<script src="/'.$script['script'].'"></script>';
-					}
+					echo Theme::js($script['script']);
 				}
 			}
 		}
@@ -152,7 +146,7 @@ class Queue {
 		// Check if the page has any scripts to load
 		if($this->_has_scripts($page_url)) {
 			foreach($this->scripts[$page_url] as $script) {
-				echo '<script src="/'.$script['script'].'"></script>';
+				echo Theme::js($script['script']);
 			}
 		}
 	}
@@ -177,11 +171,7 @@ class Queue {
 		// Load all global application stylesheets
 		if($this->_has_stylesheets('global-app')) {
 			foreach($this->stylesheets['global-app'] as $stylesheet) {
-				if(starts_with($stylesheet['stylesheet'], 'http')) {
-					echo '<link rel="stylesheet" href="'.$stylesheet['stylesheet'].'">';
-				} else {
-					echo '<link rel="stylesheet" href="/'.$stylesheet['stylesheet'].'">';
-				}
+				echo Theme::css($stylesheet['stylesheet']);
 			}
 		}
 
@@ -189,11 +179,7 @@ class Queue {
 		if(starts_with($page_url, url('/').'/admin')) {
 			if($this->_has_stylesheets('global-admin')) {
 				foreach($this->stylesheets['global-admin'] as $stylesheet) {
-					if(starts_with($stylesheet['stylesheet'], 'http')) {
-						echo '<link rel="stylesheet" href="'.$stylesheet['stylesheet'].'">';
-					} else {
-						echo '<link rel="stylesheet" href="/'.$stylesheet['stylesheet'].'">';
-					}
+					echo Theme::css($stylesheet['stylesheet']);
 				}
 			}
 
@@ -201,11 +187,7 @@ class Queue {
 		} else {
 			if($this->_has_stylesheets('global-game')) {
 				foreach($this->stylesheets['global-game'] as $stylesheet) {
-					if(starts_with($stylesheet['stylesheet'], 'http')) {
-						echo '<link rel="stylesheet" href="'.$stylesheet['stylesheet'].'">';
-					} else {
-						echo '<link rel="stylesheet" href="/'.$stylesheet['stylesheet'].'">';
-					}
+					echo Theme::css($stylesheet['stylesheet']);
 				}
 			}
 		}
@@ -213,7 +195,7 @@ class Queue {
 		// Check if the page has any scripts to load
 		if($this->_has_stylesheets($page_url)) {
 			foreach($this->stylesheets[$page_url] as $stylesheet) {
-				echo '<link rel="stylesheet" href="/'.$stylesheet['stylesheet'].'">';
+				echo Theme::css($stylesheet['stylesheet']);
 			}
 		}
 	}
@@ -227,48 +209,8 @@ class Queue {
 	 * @return string
 	 */
 	private function _get_request_url($url, $type) {
-		// Set the key to empty
-		$key = '';
-
-		// Type of script
-		if($type == 'script') {
-			$key = array_search('add_queue_script', array_column(debug_backtrace(), 'function'));
-		} elseif($type == 'stylesheet') {
-			$key = array_search('add_queue_stylesheet', array_column(debug_backtrace(), 'function'));
-		}
-
-		// Fetch the filename
-		$filename = debug_backtrace()[$key]['file'];
-		
-		// Build the request url
-		if(!starts_with($url, 'http')) {
-
-			// Check if the url starts with '/'
-			if(!starts_with($url, '/')) {
-				$asset_url = '/'.$url;
-			} else {
-				$asset_url = $url;
-			}
-
-			$location = '';
-			$short = '';
-			// Check if this was called from a theme
-			if(str_contains($filename, '\app\Themes')) {
-				$location = 'themes';
-				$short = get_string_between($filename, '\app\Themes\\', '\\');
-			// Check if this was called from a plugin
-			} elseif(str_contains($filename, '\app\Plugins')) {
-				$location = 'plugins';
-				$short = get_string_between($filename, '\app\Plugins\\', '\\');
-			}
-
-			// Set the request url
-			$request_url = 'assets/'.$location.'/'.$short.$asset_url;
-		} else {
-			// Set the request url
-			$request_url = $url;
-		}
-		return $request_url;
+		// NOTE: $type no longer needed with Theme.
+		return Theme::url($url);
 	}
 
 	/**

@@ -41,9 +41,9 @@ class Table_Pages extends Table {
 			// Loop through the columns
 			foreach($this->columns as $column) {
 				if($column['data'] == 'title') {
-					echo '<td><a href="'.route('admin.content.pages.edit', ['id' => $page->id]).'">'.$page->$column['data'].'</a></td>';
+					echo '<td><a href="'.route('admin.content.pages.edit', ['id' => $page->id]).'">'.$page->{$column['data']}.'</a></td>';
 				} else {
-					echo '<td>'.ucfirst($page->$column['data']).'</td>';
+					echo '<td>'.$page->{$column['data']}.'</td>';
 				}
 			}
 			echo '</tr>';

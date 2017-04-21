@@ -1,4 +1,7 @@
 <?php
+
+use igaster\laravelTheme\Facades\Theme;
+
 /**
  * Definte the directory.
  *
@@ -31,6 +34,11 @@ require_once(GHOST_ADMIN_SETUP.'/pet.php');
 require_once(GHOST_ADMIN_SETUP.'/table-pages.php');
 require_once(GHOST_ADMIN_SETUP.'/table-pets.php');
 require_once(GHOST_ADMIN_SETUP.'/table-users.php');
+
+/**
+ * Set the theme for this section.
+ */
+Theme::set('i17_ghost');
 
 /**
  * Require the admin theme init file.

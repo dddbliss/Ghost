@@ -11,7 +11,7 @@ trait MetadataBase {
 	 * @return object
 	 */
 	private function getMetadata($key) {
-		return $this->metadata->where('key', '=', $key)->first();
+		return $this->metadata()->where('key', '=', $key)->first();
 	}
 
 	/**
